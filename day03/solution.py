@@ -1,48 +1,10 @@
+from utilities.grid import Grid, Position
+
+
 def parse():
     with open('input') as f:
         data = f.read()
     return Grid([list(line) for line in data.split('\n')])
-
-
-class GridIterator:
-    def __init__(self, grid):
-        self._grid = grid
-        self._current_row = 0
-        self._current_column = 0
-
-    def __next__(self):
-        if self._current_row >= self._grid.height:
-            raise StopIteration
-
-        value = self._grid.data[self._current_row][self._current_column]
-        self._current_column += 1
-        if self._current_column >= self._grid.width:
-            self._current_column = 0
-            self._current_row += 1
-
-        return self._current_row, self._current_column, value
-
-
-class Grid:
-    def __init__(self, data):
-        self.data = data
-        self.height = len(data)
-        self.width = len(data[0])
-
-    def __iter__(self):
-        return GridIterator(self)
-
-    def get_value(self, position):
-        return self.data[position.row][position.column]
-
-
-class Position:
-    def __init__(self, row, column):
-        self.row = row
-        self.column = column
-
-    def clone(self):
-        return Position(self.row, self.column)
 
 
 def count_trees(grid, d_row, d_column):
