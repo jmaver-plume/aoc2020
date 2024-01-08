@@ -35,6 +35,45 @@ class Grid:
     def set_value(self, position, value):
         self.data[position.row][position.column] = value
 
+    def neighbours(self, position, diagonals=False):
+        row = position.row
+        column = position.column
+        neighbours = []
+
+        if row != 0:
+            neighbours.append(Position(row - 1, column))
+        if row != self.height - 1:
+            neighbours.append(Position(row + 1, column))
+        if column != 0:
+            neighbours.append(Position(row, column - 1))
+        if column != self.width - 1:
+            neighbours.append(Position(row, column + 1))
+
+        if diagonals:
+            # top left, top right, bottom left, bottom right
+            if row != 0 and column != 0:
+                neighbours.append(Position(row - 1, column - 1))
+            if row != 0 and column != self.width - 1:
+                neighbours.append(Position(row - 1, column + 1))
+            if row != self.height - 1 and column != 0:
+                neighbours.append(Position(row + 1, column - 1))
+            if row != self.height - 1 and column != self.width - 1:
+                neighbours.append(Position(row + 1, column + 1))
+
+        return neighbours
+
+    def hash(self):
+        return hash(tuple(tuple(row) for row in self.data))
+
+    def empty(self):
+        for row in range(self.height):
+            for column in range(self.width):
+                self.set_value(Position(row, column), 0)
+
+    def log(self):
+        for row in range(self.height):
+            print(''.join(self.get_row(row)))
+
     @staticmethod
     def create(height, width):
         data = []
