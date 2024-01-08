@@ -50,7 +50,7 @@ def p2():
 
 
 def main():
-    print(f'p2: {p1()}')
+    print(f'p1: {p1()}')
     print(f'p2: {p2()}')
 
 
