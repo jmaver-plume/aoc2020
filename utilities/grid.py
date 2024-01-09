@@ -92,3 +92,6 @@ class Position:
 
     def clone(self):
         return Position(self.row, self.column)
+
+    def log(self):
+        print(f'({self.row}, {self.column})')
